@@ -1,18 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-// const router = require('./router/router')
+const router = require('./router/router')
 const cors = require('cors')
 const config = require('./config/config')
 // const mongodbConnection = require('./config/mongodb')
 
 app.use(bodyParser.json())
 app.use(cors())
-
-const router = express.Router()
-router.get('/', (req, res) => {
-    res.send({ message: 'success-server' })
-})
 app.use('/api', router);
 
 
