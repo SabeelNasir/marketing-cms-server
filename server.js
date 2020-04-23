@@ -13,7 +13,7 @@ const router = express.Router()
 router.get('/', (req, res) => {
     res.send({ message: 'success-server' })
 })
-app.use(router);
+app.use('/api', router);
 
 
 app.listen(config.port, function () {
