@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const router = require('./router/router')
+// const router = require('./router/router')
 const cors = require('cors')
 const session = require('express-session')
 const config = require('./config/config')
@@ -10,6 +10,11 @@ const config = require('./config/config')
 app.use(bodyParser.json())
 app.use(cors())
 app.use(session(config.sessionOptions))
+
+const router = express.Router()
+router.get('/', (req, res) => {
+    res.send({ message: 'success-server' })
+})
 app.use('/api', router);
 
 
