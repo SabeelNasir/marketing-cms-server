@@ -4,7 +4,7 @@ const app = express();
 const router = require('./router/router')
 const cors = require('cors')
 const config = require('./config/config')
-// const mongodbConnection = require('./config/mongodb')
+const mongodbConnection = require('./config/mongodb')
 
 app.use(bodyParser.json())
 app.use(cors())
