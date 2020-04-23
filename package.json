@@ -4,8 +4,9 @@
   "description": "nodejs server for my marketing-cms-app",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npx cross-env NODE_ENV=development nodemon server"
+    "test": "node server.js",
+    "server": "npx cross-env NODE_ENV=development nodemon server",
+    "start": "node server.js"
   },
   "author": "sabeelNasir",
   "license": "ISC",
