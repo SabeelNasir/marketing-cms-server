@@ -31,7 +31,8 @@ const production = {
         username: 'root',
         password: '',
         dialect: 'mysql',
-        mongoDbConnectionString: "mongodb://localhost:27017/marketing_cms"
+        // mongoDbConnectionString: "mongodb://localhost:27017/marketing_cms"
+        mongoDbConnectionString: "mongodb+srv://sabeelnasir:sabeelnasir@cluster0-yumgy.mongodb.net/marketing_cms"
     },
     port: 5001,
     sessionOptions: {
