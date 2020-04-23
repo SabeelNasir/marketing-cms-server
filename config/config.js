@@ -10,7 +10,7 @@ const development = {
         username: 'root',
         password: '',
         dialect: 'mysql',
-        mongoDbConnectionString: "mongodb+srv://sabeel1:kZiZCUmCzazZclow@cluster0-mf5km.mongodb.net/test"
+        mongoDbConnectionString: "mongodb+srv://sabeelnasir:sabeelnasir@cluster0-yumgy.mongodb.net/marketing_cms"
     },
     port: 3000,
     sessionOptions: {
