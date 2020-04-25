@@ -1,4 +1,5 @@
 const env = process.env.NODE_ENV || 'development'
+const dbConnStr = process.env.DB_CONN || "mongodb://localhost:27017/marketing_cms"
 const development = {
     authentication: {
         jwtSecret: 'jwtSecret',
@@ -10,7 +11,7 @@ const development = {
         username: 'root',
         password: '',
         dialect: 'mysql',
-        mongoDbConnectionString: "mongodb+srv://sabeelnasir:sabeelnasir@cluster0-yumgy.mongodb.net/marketing_cms"
+        mongoDbConnectionString: dbConnStr
     },
     port: 3000,
     sessionOptions: {
@@ -31,8 +32,7 @@ const production = {
         username: 'root',
         password: '',
         dialect: 'mysql',
-        // mongoDbConnectionString: "mongodb://localhost:27017/marketing_cms"
-        mongoDbConnectionString: "mongodb+srv://heroku:sabeelnasir@cluster0-yumgy.mongodb.net/marketing_cms"
+        mongoDbConnectionString: dbConnStr
     },
     port: process.env.PORT || 3000,
     sessionOptions: {
