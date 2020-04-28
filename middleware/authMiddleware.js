@@ -2,10 +2,12 @@ const jwt = require('jsonwebtoken')
 const config = require('../config/config')
 const { UNAUTHORIZED } = require('http-status-codes')
 module.exports = (req, res, next) => {
-    const bearerToken = req.headers['authorization']
+    // const bearerToken = req.headers['authorization']
+    const authCookie = req.headers['cookie']
     try {
-        if (typeof bearerToken != "undefined") {
-            const token = bearerToken.split(' ')[1]
+        if (typeof authCookie != "undefined") {
+            // const token = bearerToken.split(' ')[1]
+            const token = authCookie.split('access_token=')[1]
             if (token) {
                 req.token = token
                 jwt.verify(token, config.authentication.jwtSecret, (error, user) => {

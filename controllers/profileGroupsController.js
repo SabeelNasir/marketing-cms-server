@@ -33,7 +33,7 @@ module.exports = {
             res.status(UNPROCESSABLE_ENTITY).send('Profile Group Already Exists with this Name')
         }
     },
-    updateProfileGroup(req, res) {
+    async updateProfileGroup(req, res) {
         ProfileGroups.updateOne({ _id: req.params.id }, req.body, (error, document) => {
             if (error) {
                 res.status(UNPROCESSABLE_ENTITY).send(error)

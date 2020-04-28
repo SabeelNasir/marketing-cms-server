@@ -4,7 +4,8 @@ const authMiddleware = require('../middleware/authMiddleware')
 const { getUsers, saveUser, updateUser, deleteUser } = require('../controllers/usersController')
 const profileGroupsContorller = require('../controllers/profileGroupsController')
 const calendarsController = require('../controllers/calendarsController')
-const { login } = require('../controllers/authController')
+const { login, logout } = require('../controllers/authController')
+
 //Routes 
 router.get('/', (req, res) => {
     res.send({ message: 'Success' })
@@ -13,6 +14,7 @@ router.get('/', (req, res) => {
 //auth
 router.post('/login', login)
 router.post('/signup', saveUser)
+router.post('/logout', logout)
 
 //users
 router.get('/users', authMiddleware, getUsers)

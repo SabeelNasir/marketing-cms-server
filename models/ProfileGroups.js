@@ -1,10 +1,7 @@
 const mongoose = require('mongoose')
 const schema = new mongoose.Schema({
     name: String,
-    ageRange: {
-        start: Number,
-        end: Number
-    },
+    ageRange: Array,
     gender: Array,
     location: {
         city: String,

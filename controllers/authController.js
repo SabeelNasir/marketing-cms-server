@@ -4,7 +4,9 @@ const { CREATED, OK, UNPROCESSABLE_ENTITY, BAD_REQUEST, UNAUTHORIZED } = require
 const jwt = require('jsonwebtoken')
 
 function signUser(payLoad) {
-    return jwt.sign(payLoad.toObject(), config.authentication.jwtSecret, { expiresIn: config.authentication.TTL });
+    return jwt.sign(payLoad, config.authentication.jwtSecret, {
+        expiresIn: config.authentication.TTL
+    });
 }
 
 module.exports = {
@@ -14,15 +16,29 @@ module.exports = {
                 res.status(BAD_REQUEST).send('Invalid Credentials')
             } else {
                 if (document) {
-                    const token = signUser(document)
-                    res.send({
-                        user: document,
-                        token: token
+                    const obj = document.toObject()
+                    delete obj['password']
+                    const token = signUser(obj)
+                    res.cookie(config.authentication.cookieName, token, {
+                        maxAge: config.sessionOptions.cookie.maxAge,
+                        httpOnly: true
                     })
+                        .send({
+                            user: obj,
+                            token: token
+                        })
                 } else {
                     res.sendStatus(UNAUTHORIZED)
                 }
             }
+        })
+    },
+    logout(req, res) {
+        req.session.destroy((error) => {
+            if (error) {
+                res.status(400).send(error)
+            }
+            res.sendStatus(OK)
         })
     }
 }
