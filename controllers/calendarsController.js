@@ -1,5 +1,6 @@
 const { CREATED, OK, UNPROCESSABLE_ENTITY, BAD_REQUEST } = require('http-status-codes')
 const Calendars = require('../models/Calendars')
+const ProfileGroups = require('../models/ProfileGroups')
 const checkDuplicate = (body) => {
     return Calendars.findOne({ name: body.name })
 }
@@ -26,6 +27,17 @@ module.exports = {
     async saveCalendar(req, res) {
         const duplicate = await checkDuplicate(req.body)
         if (!duplicate) {
+            const profileGroup = await ProfileGroups.findOne({ _id: req.body.profileGroup._id })
+            if (profileGroup) {
+                req.body.profileGroup = {
+                    _id: profileGroup._id,
+                    name: profileGroup.name,
+                    ageRange: profileGroup.ageRange,
+                    gender: profileGroup.gender,
+                    location: profileGroup.location,
+                    language: profileGroup.language
+                }
+            }
             Calendars.create(req.body)
                 .then(result => res.send(result))
                 .catch(error => res.status(CREATED).send(error))
@@ -33,12 +45,27 @@ module.exports = {
             res.status(UNPROCESSABLE_ENTITY).send('Calendar Already Exists with this Name')
         }
     },
-    updateCalendar(req, res) {
+    async updateCalendar(req, res) {
+
+        const profileGroup = await ProfileGroups.findOne({ _id: req.body.profileGroup._id })
+        if (profileGroup) {
+            req.body.profileGroup = {
+                _id: profileGroup._id,
+                name: profileGroup.name,
+                ageRange: profileGroup.ageRange,
+                gender: profileGroup.gender,
+                location: profileGroup.location,
+                language: profileGroup.language
+            }
+        }
+        console.log(req.body)
         Calendars.updateOne({ _id: req.params.id }, req.body, (error, document) => {
             if (error) {
                 res.status(UNPROCESSABLE_ENTITY).send(error)
             } else {
-                res.send(document)
+                setTimeout(() => {
+                    res.send(document)
+                }, 2000)
             }
         })
     },
