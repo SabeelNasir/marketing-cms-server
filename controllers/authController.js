@@ -2,6 +2,8 @@ const config = require('../config/config')
 const Users = require('../models/Users')
 const { CREATED, OK, UNPROCESSABLE_ENTITY, BAD_REQUEST, UNAUTHORIZED } = require('http-status-codes')
 const jwt = require('jsonwebtoken')
+const crypto = require('crypto')
+const ResponseWrapper = require('../utils/responseWrapper')
 
 function signUser(payLoad) {
     return jwt.sign(payLoad, config.authentication.jwtSecret, {
@@ -11,9 +13,14 @@ function signUser(payLoad) {
 
 module.exports = {
     login(req, res) {
-        Users.findOne(req.body, (error, document) => {
+        const hashPass = crypto
+            .createHash("md5")
+            .update(req.body.password)
+            .digest("hex")
+            console.log(hashPass)
+        Users.findOne({ email: req.body.email, password: hashPass }, (error, document) => {
             if (error) {
-                res.status(BAD_REQUEST).send('Invalid Credentials')
+                ResponseWrapper.sendBadRequestResponse(res, 'Invalid Credentials')
             } else {
                 if (document) {
                     const obj = document.toObject()
@@ -28,7 +35,7 @@ module.exports = {
                             token: token
                         })
                 } else {
-                    res.sendStatus(UNAUTHORIZED)
+                    ResponseWrapper.sendBadRequestResponse(res, 'Invalid Credentials')
                 }
             }
         })

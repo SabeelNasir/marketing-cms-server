@@ -5,6 +5,7 @@ const { getUsers, saveUser, updateUser, deleteUser } = require('../controllers/u
 const profileGroupsContorller = require('../controllers/profileGroupsController')
 const calendarsController = require('../controllers/calendarsController')
 const { login, logout } = require('../controllers/authController')
+const AuthRequestMiddlware = require('../middleware/authRequestMiddleware')
 
 //Routes 
 router.get('/', (req, res) => {
@@ -12,7 +13,7 @@ router.get('/', (req, res) => {
 })
 
 //auth
-router.post('/login', login)
+router.post('/login', AuthRequestMiddlware.verifyAuthRequest, login)
 router.post('/signup', saveUser)
 router.post('/logout', logout)
 
